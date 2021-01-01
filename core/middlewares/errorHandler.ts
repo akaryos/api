@@ -7,7 +7,9 @@ export default function (error: Error, request: Request, response: Response, nex
     return response.json({ status: error.statusCode, message: error.message })
   }
 
-  console.error(error)
+  if (process.env.NODE_DEV === 'development') {
+    console.error(error)
+  }
 
   return response.status(500).json({ status: 'error', message: 'Internal server error' })
 }
