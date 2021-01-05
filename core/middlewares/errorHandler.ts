@@ -7,7 +7,7 @@ export default function (error: Error, request: Request, response: Response, nex
     return response.json({ status: error.statusCode, message: error.message })
   }
 
-  if (process.env.NODE_DEV === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     console.error(error)
   }
 
