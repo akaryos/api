@@ -10,15 +10,17 @@ const uploadRouter = Router()
 uploadRouter.use(Authentication)
 
 uploadRouter.post('/', multer(uploadConfig).single('file'), async (request, response) => {
+  const { key, filename, originalname, mimetype, size, location: url = '' } = request.file
+
   const UploadFile = new UploadFileService()
 
   const file = await UploadFile.execute({
     user_id: request.user.id,
-    name: request.file.filename,
-    original: request.file.originalname,
-    type: request.file.mimetype,
-    size: request.file.size,
-    url: ''
+    name: filename || key,
+    original: originalname,
+    type: mimetype,
+    size,
+    url
   })
 
   response.status(200).json(file)
