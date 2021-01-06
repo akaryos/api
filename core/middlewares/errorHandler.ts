@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
+import { MulterError } from 'multer'
 
 import AppError from '../errors/AppError'
 
@@ -7,7 +8,11 @@ export default function (error: Error, request: Request, response: Response, nex
     return response.json({ status: error.statusCode, message: error.message })
   }
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (error instanceof MulterError) {
+    return response.status(400).json({ status: response.statusCode, message: error.message })
+  }
+
+  if (!process.env.NODE_ENV) {
     console.error(error)
   }
 
