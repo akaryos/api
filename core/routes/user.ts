@@ -1,28 +1,12 @@
 import { Router } from 'express'
-import { classToClass } from 'class-transformer'
 
-import CreateUserService from '../services/CreateUserService'
+import UserController from '../controllers/UserController'
 import Authentication from '../middlewares/Authentication'
-import GetPostsService from '../services/GetPostsService'
 
 const userRouter = Router()
+const userController = new UserController()
 
-userRouter.post('/register', async (request, response) => {
-  const { username, password } = request.body
-
-  const CreateUser = new CreateUserService()
-
-  const user = await CreateUser.execute({ username, password })
-
-  response.status(201).json(classToClass(user))
-})
-
-userRouter.get('/posts', Authentication, async (request, response) => {
-  const GetPosts = new GetPostsService()
-
-  const posts = await GetPosts.execute(request.user.id)
-
-  response.status(200).json(posts)
-})
+userRouter.post('/register', userController.create)
+userRouter.get('/posts', Authentication, userController.index)
 
 export default userRouter
