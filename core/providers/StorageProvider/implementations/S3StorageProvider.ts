@@ -33,6 +33,8 @@ class S3StorageProvider implements IStorageProvider {
       ContentType
     }).promise()
 
+    await fs.promises.unlink(originalDirectory)
+
     return file
   }
 
