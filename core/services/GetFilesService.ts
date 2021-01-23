@@ -2,14 +2,14 @@ import { getRepository } from 'typeorm'
 
 import File from '../models/File'
 
-class GetPostsService {
+class GetFilesService {
   public async execute (id: string): Promise<File[]> {
     const filesRepository = getRepository(File)
 
-    const files = filesRepository.find({ where: { user_id: id } })
+    const files = await filesRepository.find({ where: { user_id: id } })
 
     return files
   }
 }
 
-export default GetPostsService
+export default GetFilesService
