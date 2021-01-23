@@ -21,7 +21,7 @@ export default class UploadController {
       original,
       type,
       size,
-      url: nodeENV(`https://${process.env.AWS_S3_BUCKET}/${name}`, `http//localhost:${process.env.PORT}/${name}`)
+      url: nodeENV(`https://${process.env.AWS_S3_BUCKET}/${name}`, `http://localhost:${process.env.PORT}/${name}`)
     })
 
     return response.status(200).json(file)
