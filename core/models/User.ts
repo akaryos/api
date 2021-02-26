@@ -22,6 +22,9 @@ class User {
   @Exclude()
   password: string
 
+  @Column()
+  storage: number
+
   @OneToMany(() => File, (file) => file.user_id)
   files: File[]
 
